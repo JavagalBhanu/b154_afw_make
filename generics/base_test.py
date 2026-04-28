@@ -2,6 +2,8 @@ import pytest
 from playwright.sync_api import sync_playwright
 from pyjavaproperties import Properties
 import os
+import allure
+
 class BaseTest:
 
     @pytest.fixture(autouse=True)
@@ -89,9 +91,15 @@ class BaseTest:
 
         if self.video.lower() == "yes":
             print(f"saving video:{self.test_name}.webm")
-            self.page.video.save_as(f"{self.video_path}{self.test_name}.webm")
+            video_file = f"{self.video_path}{self.test_name}.webm"
+            self.page.video.save_as(video_file)
             self.page.video.delete()
-
+            allure.attach.file(
+                video_file,
+                name=f"{self.test_name}_video",
+                attachment_type=allure.attachment_type.WEBM,
+                extension="webm",
+            )
         print("close the context")
         self.context.close()
 
