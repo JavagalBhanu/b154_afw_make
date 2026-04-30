@@ -17,4 +17,3 @@ class Test_InvalidLogin(BaseTest):
         # 4. verify that error message is displayed
         result=login_page.verify_errmsg_is_displayed()
         assert result
-        # assert False

@@ -2,6 +2,7 @@ name: Run Tests At Push
 
 on: [push]
 
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -45,6 +46,14 @@ jobs:
         with:
           name: allure-report
           path: allure-report/
+          if-no-files-found: warn
+
+      - name: Upload raw Allure results as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results/
           if-no-files-found: warn
 
       - name: Upload raw videos as artifact
